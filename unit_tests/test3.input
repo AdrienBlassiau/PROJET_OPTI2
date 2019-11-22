@@ -1,0 +1,12 @@
+# Fichier généré avec generate.jl, avec des très gros poids sur les cases de la grille, profit opt : 10
+
+5 5
+113 158 135 113 142 
+195 174 190 129 133 
+184 130 166 193 158 
+128 114 150 171 181 
+174 183 199 179 183 
+3
+4 2 8
+2 2 2
+5 3 2
