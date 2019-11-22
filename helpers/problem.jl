@@ -23,7 +23,7 @@ Utiliser ?NOM dans l'interface en ligne de commande Julia pour avoir de la docum
 Par exemple ?Instance affiche la documetation sur le type Instance
 
 
-""" -> 
+""" ->
 module Moon
 
   export Instance, get_cost, collide, Solution, place, remove, is_placed, place_of, profit
@@ -39,7 +39,7 @@ module Moon
   - `wa` est un tableau de `n` entiers, `wa[i]` est le nombre de colonnes du rectangle que l'annonceur souhaite acheter.
   - `ha` est un tableau de `n` entiers, `ha[i]` est le nombre de lignes du rectangle que l'annonceur souhaite acheter.
   - `ma` est un tableau de `n` entiers, `ma[i]` est le montant maximum que l'annonceur est prêt à payer.
-  
+
   Il n'est pas nécessaire de construire vous même les entrées.
   Utilisez le fichier generate.jl pour cela.
 
@@ -50,7 +50,7 @@ module Moon
     ω::Array{Array{Int}} # matrice couts
     n::Int # nbre annonceurs
     wa::Array{Int} # nb colonnes des annonceurs
-    ha::Array{Int} # nb lignes des annonceurs 
+    ha::Array{Int} # nb lignes des annonceurs
     ma::Array{Int} # montant max des annonceurs
   end
   Instance() = Instance(0, 0, [], 0, [], [], []) # Constructeur par défaut
@@ -59,7 +59,7 @@ module Moon
   @doc """
   `valid_placement(inst::Instance, i::Int, l::Int, c::Int)`
 
-  Renvoie vrai s'il est possible de placer la case en haut à guache du rectangle que souhaite acheter le i-ieme annonceur sur la ligne l et la colonne c sans déborder du rectangle et faux sinon. Si le i-ieme annonceur n'existe pas, renvoie faux. 
+  Renvoie vrai s'il est possible de placer la case en haut à guache du rectangle que souhaite acheter le i-ieme annonceur sur la ligne l et la colonne c sans déborder du rectangle et faux sinon. Si le i-ieme annonceur n'existe pas, renvoie faux.
   Autrement dit renvoie vrai si
   - `l` : entier entre 1 et `inst.h` - `inst.ha[i]`
   - `c` : entier entre 1 et `inst.w` - `inst.wa[i]`
@@ -91,14 +91,14 @@ module Moon
 
     s = sum(inst.ω[lp][cp] for lp in l:(l+inst.ha[i] - 1) for cp in c:(c + inst.wa[i] - 1))
     return min(s, inst.ma[i])
-    
+
   end
-  
-  
+
+
   @doc """
   `collide(inst::Instance, i1::Int, l1::Int, c1::Int, i2::Int, l2::Int, c2::Int)`
 
-   En supposant qu'on place la case en haut à gauche du rectangle que souhaite acheter le i1-eme annonceur (respectivement i2-ieme) sur la ligne l1 (resp. l2) et la colonne c1 (resp. c2), renvoie vrai si les deux rectangles ont une intersection non vide. 
+   En supposant qu'on place la case en haut à gauche du rectangle que souhaite acheter le i1-eme annonceur (respectivement i2-ieme) sur la ligne l1 (resp. l2) et la colonne c1 (resp. c2), renvoie vrai si les deux rectangles ont une intersection non vide.
   Renvoie nothing si les placements ne sont pas valides (selon la fonction valid_placement).
 
   """ ->
@@ -111,7 +111,7 @@ module Moon
     end
 
     return !(l1 + inst.ha[i1] - 1 < l2 || l2 + inst.ha[i2] - 1 < l1 || c1 + inst.wa[i1] - 1 < c2 || c2 + inst.wa[i2] - 1 < c1)
-    
+
   end
 
   @doc """
@@ -121,7 +121,7 @@ module Moon
   - `inst` est une instance dont cet objet est la solution
   - `la` est un tableau de `n` entiers, `la[i]` est la première ligne du rectangle acheté par l'annonceur i. Si on ne vend rien à l'annonceur i, alors cette valeur est `nothing`.
   - `ca` est un tableau de `n` entiers, `ca[i]` est la première colonne du rectangle acheté par l'annonceur i. Si on ne vend rien à l'annonceur i, alors cette valeur est `nothing`.
-  
+
   Vous n'avez pas à construire une solution à la main. Vous pouvez utiliser 3 fonctions pour cela:
   - Solution(inst::Instance)
   - place(sol::Solution, i::Int, l::Int, c::Int) qui place un annonceur sur la grille
@@ -157,8 +157,8 @@ module Moon
   - `c` : entier entre 1 et `inst.w` - `inst.wa[i]`
   - `i` : entier entre 1 et `inst.n`
 
-  Si le rectangle renctre en collision avec celui d'un autre annonceur précédemment placé, la fonction ne fait rien et renvoie faux. 
-  Sinon la fontion place l'annonceur et renvoie vrai. 
+  Si le rectangle renctre en collision avec celui d'un autre annonceur précédemment placé, la fonction ne fait rien et renvoie faux.
+  Sinon la fontion place l'annonceur et renvoie vrai.
   """ ->
   function place(sol, i::Int, l::Int, c::Int)
     if !valid_placement(sol.inst, i, l, c)
@@ -183,8 +183,8 @@ module Moon
   La fonction ne fait rien et renvoie faux si l'annonceur n'existe pas, autrement dit si la condition suivante n'est pas respectée.
   - `i` : entier entre 1 et `inst.n`
 
-  Si l'annonceur n'était pas palcé dans la grille avant l'appel de cette fonction, elle ne fait rien mais renvoie vrai.
-  Sinon la fontion retire l'annonceur et renvoie vrai. 
+  Si l'annonceur n'était pas placé dans la grille avant l'appel de cette fonction, elle ne fait rien mais renvoie vrai.
+  Sinon la fonction retire l'annonceur et renvoie vrai.
   """ ->
   function remove(sol, i)
     if i < 1 || i > sol.inst.n

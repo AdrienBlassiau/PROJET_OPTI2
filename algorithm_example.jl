@@ -21,7 +21,7 @@ Modifie la solution sol de l'instance inst avec l'algorithme suivant
 
 Cet algorithme place tous les annonceurs sur la première ligne ; l'annonceur j sur la colonne j ; si cela ne rentre pas en conflit avec les annonceurs précédemment placés.
 
-Cette fonction peut renvoyer n'importe quel type de variable (dont rien du tout), qui sera ensuite traité dans post_process. 
+Cette fonction peut renvoyer n'importe quel type de variable (dont rien du tout), qui sera ensuite traité dans post_process.
 """ ->
 function run(inst, sol)
 
@@ -65,7 +65,7 @@ end
 
 # Ne pas enlever
 if length(ARGS) > 0
-  input_file = ARGS[1] 
+  input_file = ARGS[1]
   main(input_file)
 end
 
