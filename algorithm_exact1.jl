@@ -17,6 +17,14 @@ include("./main.jl")
 
 ######
 
+@doc """
+Cette fonction recherche de manière récursive la meilleur solution au problème
+en explorant tout les arrangement possible de n éléments parmi H*L.
+
+Le paramètre inst correspond à l'instance du problème, ann à l'anonceur courant que l'on essaye de placer, sol à la solution courante, profit_max au meilleur profit trouvé pour le moment et sol_max à la meilleur solution trouvée pour le moment.
+
+Cette fonction renvoie profit_max qui est le meilleur profit trouvé pour le moment et sol_max qui est la meilleur solution trouvée pour le moment.
+""" ->
 function rec_classical_run(inst,ann,sol,profit_max,sol_max)
 	# global profit_max
 	# global sol_max
@@ -44,6 +52,18 @@ function rec_classical_run(inst,ann,sol,profit_max,sol_max)
 	end
 end
 
+@doc """
+Cette fonction recherche de manière rapide la meilleur solution au problème.
+On trie tout d'abord la matrice, que l'on a redimensionnée en un vecteur, des
+couts les plus élevés au plus faible. On trie les annonceurs en fonction du
+prix qu'ils sont prêts à mettre dans l'ordre décroissant.
+On itère sur les case de la matrice triée en essayant d'y placer l'annonceur
+de cout le plus élevé. On s'arrête quand tout les annonceurs sont placés
+
+Le paramètre inst correspond à l'instance du problème et sol à la solution courante
+
+Cette fonction renvoie profit_max qui est le meilleur profit trouvé pour le moment et sol_max qui est la meilleur solution trouvée pour le moment.
+""" ->
 function fast_run(inst,sol)
 	ω = inst.ω
 	ω = permutedims(reshape(hcat(ω...), (length(ω[1]), length(ω))))
@@ -84,10 +104,15 @@ function test_easy_case(inst)
 end
 
 @doc """
-Modifie la solution sol de l'instance inst avec l'algorithme suivant
-*** DECRIRE VOTRE ALGORITHME ICI en quelques mots ***
+Cette fonction modifie la solution sol de l'instance inst avec un algorithme
+exact. Si l'instance d'entrée est quelconque, on applique une première méthode
+itérative qui teste tout les cas possibles. Par contre, si l'instance d'entrée
+est telle que tout les annonceurs demandent une seule case
+(test_easy_case(inst) à true), on applique une méthode plus rapide basée sur
+des tris.
 
-Cette fonction peut renvoyer n'importe quel type de variable (dont rien du tout), qui sera ensuite traité dans post_process.
+
+Cette fonction renvoie profit_max qui est le meilleur profit trouvé pour le moment et sol_max qui est la meilleur solution trouvée pour le moment.
 """ ->
 function run(inst, sol)
 
