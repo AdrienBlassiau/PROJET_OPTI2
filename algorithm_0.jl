@@ -12,7 +12,7 @@ include("./main.jl")
 
 # Vous pouvez mettre du code ici, il n'est pas nécessaire de mettre tout votre code dans la fonction run, ce serait illisible.
 #
-# Vous pouvez mettre des fonctions, des variables globales (attention à ne pas faire n'importe quoi, des modules, ...
+# Vous pouvez mettre des fonctions, des variables globales (attention à ne pas faire n'importe quoi), des modules, ...
 #
 
 ######
