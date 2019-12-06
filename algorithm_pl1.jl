@@ -41,9 +41,14 @@ function run(inst, sol)
   @variable(m, z[1:n, 1:h, 1:w], Bin)
   @variable(m, c[1:n], Bin)
 
+  ## Constraint C1
+  for i in 1:n
+    @constraint(m, P[i] <= ma[i])
+  end
+
   ## Constraint C2
   for i in 1:n
-    @constraint(m, sum(sum(ω[l][c]*y[i,l,c] for l in 1:h) for c in 1:w) <= ma[i])
+    @constraint(m, P[i] <= sum(sum(ω[l][c]*y[i,l,c] for l in 1:h) for c in 1:w))
   end
 
   ## Constraint C3
@@ -91,7 +96,7 @@ function run(inst, sol)
   end
 
 
-  @objective(m, Max, sum(sum(sum(ω[l][c]*y[i,l,c] for l in 1:h) for c in 1:w) for i in 1:n))
+  @objective(m, Max, sum(P[i] for i in 1:n))
   optimize!(m)
 
   return (m, P, y, z, c)
