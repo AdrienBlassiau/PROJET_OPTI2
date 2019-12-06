@@ -4,7 +4,7 @@ Projet OPTIMISATION 2 - ENSIIE - 2019-2020
 
 Programme pour lancer une batterie de tests.
 
-Utilisation : 
+Utilisation :
 Supposons pour l'exemple que vous avez un algorithme dans le fichier "algorithm_test.jl"
 et un dossier "dir_test" contenant des fichier ".input".
 Placez vous à la racine du dossier du projet (dans le dossier contenant algorithm_test.jl et helpers)
@@ -26,24 +26,24 @@ using Distributions
 ## Vous pouvez commenter/décommenter toute la section suivante selon que vous testez ou non un programme linéaire.
 # Pour commenter plusieurs lignes en Julia, on peut mettre les lignes entre #= et =# ; supprimez ces deux lignes pour décommenter.
 
-#=
+
 ## Indiquer votre solveur de programmation linéaire
 
 using JuMP
-using GLPK
-m = Model(with_optimizer(GLPK.Optimizer))
+# using GLPK
+# m = Model(with_optimizer(GLPK.Optimizer))
 
 # using CPLEX
 # m = Model(with_optimizer(CPLEX.Optimizer))
 
-# using SCIP
-# m = Model(with_optimizer(SCIP.Optimizer))
+using Cbc
+m = Model(with_optimizer(Cbc.Optimizer))
 
-@variable(m, x, Bin)
-@objective(m, Min, x)
-@constraint(m, x <= 0.5)
-optimize!(m)
-=#
+# @variable(m, x, Bin)
+# @objective(m, Min, x)
+# @constraint(m, x <= 0.5)
+# optimize!(m)
+
 
 println("Chargement terminé.")
 

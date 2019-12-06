@@ -10,11 +10,11 @@ include("./main.jl")
 # VOTRE CODE
 
 
-println("Chargement de JuMP")
-using JuMP
-println("Chargement de Cbc")
-using Cbc
-println("Chargé")
+# println("Chargement de JuMP")
+# using JuMP
+# println("Chargement de Cbc")
+# using Cbc
+# println("Chargé")
 
 ######
 
