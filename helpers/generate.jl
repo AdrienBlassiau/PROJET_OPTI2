@@ -7,14 +7,14 @@ Projet OPTIMISATION 2 - ENSIIE - 2019-2020
 Module contenant 3 fonctions de génération d'instances du problème d'annonces publicitaires sur la Lune.
   Il contient 3 fonctions
   - `generate(w, h, n, bounds_ω, bounds_ma)` génère une instance.
-  - `generate(w, h, n, bounds_ω, bounds_ma, filename)` génère une instance et écrit le tout dans le fichier filename. 
+  - `generate(w, h, n, bounds_ω, bounds_ma, filename)` génère une instance et écrit le tout dans le fichier filename.
   - `generate(filename) renvoie l'instance décrite dans le fichier filename (généré avec la fonction précédente)
 
 Utilisez using .Generator pour utiliser le module et son contenu dans votre code.
 
 Utiliser ?NOM dans l'interface en ligne de commande Julia pour avoir de la documentation sur NOM.
 Par exemple ?generate affiche la documetation sur les fonctions generate
-""" -> 
+""" ->
 module Generator
 
   export generate
@@ -43,7 +43,7 @@ module Generator
   """ ->
   function generate(w::Int, h::Int, n::Int, pw::Float64, ph::Float64, bounds_ω::Tuple{Int, Int}, bounds_ma::Tuple{Int, Int})
     inst = Instance()
-    
+
     # Paramètres de base
     inst.w = w
     inst.h = h
@@ -72,7 +72,7 @@ module Generator
       push!(inst.ha, rand(dist_ha) + 1)
       push!(inst.ma, rand(dist_ma))
     end
-      
+
     return inst
   end
 
@@ -107,10 +107,10 @@ module Generator
     open(filename, "w") do file
       write(file, "# Fichier généré avec generate.jl, avec les paramètres $w $h $n $pw $ph $bounds_ω, $bounds_ma\n")
       write(file, "\n")
-      
+
       # Taille de la grille
       write(file, "$(inst.w) $(inst.h)\n")
-      
+
       # Poids des cases
       for l in 1:inst.h
         for c in 1:inst.w
@@ -124,13 +124,13 @@ module Generator
       for i in 1:inst.n
         write(file, "$(inst.wa[i]) $(inst.ha[i]) $(inst.ma[i])\n")
       end
-    
+
     end
     return inst
   end
 
 
-  @doc """ 
+  @doc """
   generate(filename::String)
 
   Lecture fichier de données.
@@ -145,10 +145,10 @@ module Generator
   - n lignes contenant 3 entiers positifs séparés par des espaces
   """ ->
   function generate(filename::String)
-    
+
     open(filename) do file
       lines = readlines(file)  # fichier de l'instance à resoudre
-      
+
       inst = Instance()
 
       # Taille de la grille
