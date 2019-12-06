@@ -10,11 +10,11 @@ include("./main.jl")
 # VOTRE CODE
 
 
-# println("Chargement de JuMP")
-# using JuMP
-# println("Chargement de Cbc")
-# using Cbc
-# println("Chargé")
+println("Chargement de JuMP")
+using JuMP
+println("Chargement de Cbc")
+using Cbc
+println("Chargé")
 
 ######
 
@@ -34,7 +34,7 @@ function run(inst, sol)
   h = inst.h
   w = inst.w
 
-  m = Model(with_optimizer(Cbc.Optimizer))
+  m = Model(with_optimizer(Cbc.Optimizer,logLevel = 0))
 
   @variable(m, P[1:n])
   @variable(m, y[1:n, 1:h, 1:w], Bin)
@@ -112,16 +112,16 @@ function post_process(cpu_time::Float64, inst, sol, others)
   # Run a renvoyé le modèle et ses variables, qui ont été mis dans others.
   m, P, y, z, c = others
 
-  print(m)
+  # print(m)
 
-  println()
+  # println()
 
-  println("TERMINAISON : ", termination_status(m))
+  # println("TERMINAISON : ", termination_status(m))
   println("OBJECTIF : $(objective_value(m))")
-  println("VALEURS de P : $(value.(P))")
-  println("VALEURS de y : $(value.(y))")
-  println("VALEURS de z : $(value.(z))")
-  println("VALEURS de c : $(value.(c))")
+  # println("VALEURS de P : $(value.(P))")
+  # println("VALEURS de y : $(value.(y))")
+  # println("VALEURS de z : $(value.(z))")
+  # println("VALEURS de c : $(value.(c))")
 
   println("Temps de calcul : $cpu_time.")
 
