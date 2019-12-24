@@ -9,8 +9,43 @@ include("./neighbourhood.jl")
 
 println("Chargement de Random")
 using Random
+println("Random chargée")
+println("Chargement de Plots")
+using Plots
+println("Plots de chargée")
 
 
+function plot_grid(inst, sol, p)
+	for j in 1:inst.h
+		for k in 1:inst.w
+			price = inst.ω[j][k]
+			p = plot!(annotation=[(k+0.5,j+0.5,text("$price",11,RGBA(1,0,0, 0.5),:left))])
+		end
+	end
+	display(p)
+end
+
+function plot_solution(inst, sol)
+
+	rectangle(w, h, x, y) = Plots.Shape([(x,y),(x+w,y),(x+w,y+h),(x,y+h)])
+	w = inst.w
+	h = inst.h
+	p = plot(lims=(1,11), xticks = 1:1:w+1, yticks = 1:1:h+1, mirror=true, yflip=true)
+	display(p)
+	plot_grid(inst, sol, p)
+	for i in 1:inst.n
+		if (is_placed(sol,i))
+			place_i = place_of(sol, i)
+			y=place_i[1]
+			x=place_i[2]
+			w=inst.wa[i]
+			h=inst.ha[i]
+			p = plot!(rectangle(w,h,x,y), opacity=.5, label="A$i")
+		end
+	end
+	display(p)
+	sleep(0.1)
+end
 
 function energie_proba_distrib(delta_E,T)
 	return exp(-delta_E/T)
@@ -21,11 +56,11 @@ end
 Cette fonction réalise un recuit simulé
 """ ->
 function simulated_annealing(inst, sol)
-
+	gr()
 	################ PARAMÈTRES ################
-	phi = 0.99995
+	phi = 0.9995
 	D_step = 2
-	T_init = 110
+	T_init = 200
 	epsilon = 0.0001
 	k = 0
 	############################################
@@ -38,12 +73,14 @@ function simulated_annealing(inst, sol)
 	T = T_init
 	############################################
 
+	plot_solution(inst, current_sol)
 
 	while (T > epsilon)
 
 		println("########## NOUVEAU PALIER $k(CURRENT BEST : $meilleur_gain )##########")
 
 		for i in 0:D_step-1
+			# plot_solution(inst, current_sol)
 			println("########## ITERATION n°$i ##########")
 
 			# Selection d'un voisin
@@ -60,6 +97,7 @@ function simulated_annealing(inst, sol)
 					meilleur_gain = current_gain
 					meilleur_sol = deepcopy(current_sol)
 					println("NOUVEAU MINIMUM : $meilleur_gain")
+					plot_solution(inst, current_sol)
 				end
 			else
 				rand_double = rand()
@@ -99,10 +137,6 @@ function post_process(cpu_time::Float64, inst, sol, others)
 	profit_max = others
 	# println("OBJECTIF : $profit_max")
 end
-
-
-
-
 
 
 # Ne pas enlever

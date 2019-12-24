@@ -32,17 +32,21 @@ function select_neighbour(inst, sol)
 	println(dec_l)
 	println(dec_l_size)
 
-	rand_int = get_random_int(1,total_size)
 
-    if(rand_int <= add_l_size)
-		println("ADD : $rand_int")
-    	return (1,add_l[rand_int])
-	elseif(rand_int > add_l_size && rand_int <= add_l_size+ret_l_size)
-		println("REMOVE : $rand_int")
-		return (2,ret_l[rand_int-add_l_size])
+	if (total_size == 0)
+		return (0,(nothing,nothing,nothing))
 	else
-		println("DECALGE : $rand_int")
-		return (3,dec_l[rand_int-add_l_size-ret_l_size])
+		rand_int = get_random_int(1,total_size)
+	    if(rand_int <= add_l_size)
+			println("ADD : $rand_int")
+	    	return (1,add_l[rand_int])
+		elseif(rand_int > add_l_size && rand_int <= add_l_size+ret_l_size)
+			println("REMOVE : $rand_int")
+			return (2,ret_l[rand_int-add_l_size])
+		else
+			println("DECALGE : $rand_int")
+			return (3,dec_l[rand_int-add_l_size-ret_l_size])
+		end
 	end
 end
 
@@ -56,7 +60,11 @@ function apply_neighbour(inst, sol, neighour)
 	j = neighbour_data[2]
 	k = neighbour_data[3]
 
-	if(neighour_type==1)
+	if (neighour_type==0)
+		println("PROFIT APRES:",profit(sol))
+		gain = profit(sol) - current_profit
+		return gain
+	elseif(neighour_type==1)
 		place(sol,i,j,k)
 		println("PROFIT APRES:",profit(sol))
 		gain = profit(sol) - current_profit
