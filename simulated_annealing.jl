@@ -85,11 +85,9 @@ function simulated_annealing(inst, sol)
 			# plot_solution(inst, current_sol)
 			println("########## ITERATION n°$i ##########")
 
-			# Selection d'un voisin
-			neighbour = select_neighbour(inst, current_sol)
-
-			# Application du voisin sur la solution courante
-			delta_gain = apply_neighbour(inst, current_sol, neighbour)
+			# Selection d'un voisin et application de ce voisin sur la solution
+			# courante
+			delta_gain,neighbour = apply_neighbour(inst, current_sol)
 			nouveau_gain = profit(current_sol)
 
 			# Si la nouvelle solution améliore la précédente

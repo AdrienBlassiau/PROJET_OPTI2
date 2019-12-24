@@ -28,7 +28,7 @@ function select_neighbour(inst, sol)
 	print("LISTE RETRAIT : ")
 	println(ret_l)
 	println(ret_l_size)
-	print("LISTE DECALAGE : ")
+	print("LISTE REPLACE : ")
 	println(dec_l)
 	println(dec_l_size)
 
@@ -44,67 +44,77 @@ function select_neighbour(inst, sol)
 			println("REMOVE : $rand_int")
 			return (2,ret_l[rand_int-add_l_size])
 		else
-			println("DECALAGE : $rand_int")
+			println("REPLACE : $rand_int")
 			return (3,dec_l[rand_int-add_l_size-ret_l_size])
 		end
 	end
 end
 
-function apply_neighbour(inst, sol, neighour)
+function apply_neighbour(inst, sol)
+
+	neighbour = select_neighbour(inst, sol)
+
 	current_profit = profit(sol)
 	println("PROFIT AVANT:$current_profit")
 
-	neighour_type = neighour[1]
-	neighbour_data = neighour[2]
+	neigbhour_type = neighbour[1]
+	neighbour_data = neighbour[2]
 	i = neighbour_data[1]
 	j = neighbour_data[2]
 	k = neighbour_data[3]
 
-	if (neighour_type==0)
+	if (neigbhour_type==0)
 		println("PROFIT APRES:",profit(sol))
 		gain = profit(sol) - current_profit
-		return gain
-	elseif(neighour_type==1)
+		return gain,neighbour
+	elseif(neigbhour_type==1)
 		place(sol,i,j,k)
 		println("PROFIT APRES:",profit(sol))
 		gain = profit(sol) - current_profit
 		println("i : $i, j:$j, k:$k et gain:$gain")
-		return gain
-	elseif(neighour_type==2)
+		return gain,neighbour
+	elseif(neigbhour_type==2)
 		remove(sol, i)
 		println("PROFIT APRES:",profit(sol))
 		gain = profit(sol) - current_profit
 		println("i : $i et gain:$gain")
-		return gain
+		return gain,neighbour
 	else
 		remove(sol, i)
 		place(sol,i,j,k)
 		println("PROFIT APRES:",profit(sol))
 		gain = profit(sol) - current_profit
 		println("i : $i, j:$j, k:$k et gain:$gain")
-		return gain
+		return gain,neighbour
 	end
 end
 
-function revert_neighbour(inst, sol, neighour)
+function revert_neighbour(inst, sol, neighbour)
 	current_profit = profit(sol)
 	println("PROFIT AVANT:$current_profit")
 
-	neighour_type = neighour[1]
-	neighbour_data = neighour[2]
+	neigbhour_type = neighbour[1]
+	neighbour_data = neighbour[2]
 
 	i = neighbour_data[1]
 	j = neighbour_data[2]
 	k = neighbour_data[3]
 
-	if(neighour_type==1)
+	if (neigbhour_type==0)
+		println("PROFIT APRES:",profit(sol))
+		gain = profit(sol) - current_profit
+
+		return gain
+	elseif(neigbhour_type==1)
+		println("REVERT ADD")
 		remove(sol,i)
 
 		println("PROFIT APRES:",profit(sol))
 		gain = profit(sol) - current_profit
 
 		return gain
-	elseif(neighour_type==2)
+	elseif(neigbhour_type==2)
+		println("REVERT REMOVE")
 		place(sol,i,j,k)
 
 		println("PROFIT APRES:",profit(sol))
@@ -112,6 +122,7 @@ function revert_neighbour(inst, sol, neighour)
 
 		return gain
 	else
+		println("REVERT REPLACE")
 		dec_type = neighbour_data[4]
 
 		remove(sol, i)
