@@ -12,8 +12,8 @@ include("./main.jl")
 
 println("Chargement de JuMP")
 using JuMP
-println("Chargement de Cbc")
-using Cbc
+println("Chargement de CPLEX")
+using CPLEX
 println("Chargé")
 
 ######
@@ -34,7 +34,8 @@ function run(inst, sol)
   h = inst.h
   w = inst.w
 
-  m = Model(with_optimizer(Cbc.Optimizer,logLevel = 0))
+  m = Model(with_optimizer(CPLEX.Optimizer))
+  MOI.set(m, MOI.RawParameter("CPX_PARAM_BARDISPLAY"),0)
 
   @variable(m, P[1:n])
   @variable(m, y[1:n, 1:h, 1:w], Bin)
