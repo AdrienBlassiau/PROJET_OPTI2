@@ -44,7 +44,7 @@ function select_neighbour(inst, sol)
 			println("REMOVE : $rand_int")
 			return (2,ret_l[rand_int-add_l_size])
 		else
-			println("DECALGE : $rand_int")
+			println("DECALAGE : $rand_int")
 			return (3,dec_l[rand_int-add_l_size-ret_l_size])
 		end
 	end

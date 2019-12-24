@@ -30,7 +30,8 @@ function plot_solution(inst, sol)
 	rectangle(w, h, x, y) = Plots.Shape([(x,y),(x+w,y),(x+w,y+h),(x,y+h)])
 	w = inst.w
 	h = inst.h
-	p = plot(lims=(1,11), xticks = 1:1:w+1, yticks = 1:1:h+1, mirror=true, yflip=true)
+	g = profit(sol)
+	p = plot(lims=(1,11), xticks = 1:1:w+1, yticks = 1:1:h+1, mirror=true, yflip=true,title="Gain : $g")
 	display(p)
 	plot_grid(inst, sol, p)
 	for i in 1:inst.n
@@ -40,7 +41,8 @@ function plot_solution(inst, sol)
 			x=place_i[2]
 			w=inst.wa[i]
 			h=inst.ha[i]
-			p = plot!(rectangle(w,h,x,y), opacity=.5, label="A$i")
+			c=get_cost(inst,i,y,x)
+			p = plot!(rectangle(w,h,x,y), opacity=.5, label="A$i", annotation=[(x+0.2,y+0.2,text("$c",5,RGBA(0,0,0,1),:left))])
 		end
 	end
 	display(p)
@@ -48,7 +50,7 @@ function plot_solution(inst, sol)
 end
 
 function energie_proba_distrib(delta_E,T)
-	return exp(-delta_E/T)
+	return exp(delta_E/T)
 end
 
 
@@ -60,7 +62,7 @@ function simulated_annealing(inst, sol)
 	################ PARAMÈTRES ################
 	phi = 0.9995
 	D_step = 2
-	T_init = 200
+	T_init = 40
 	epsilon = 0.0001
 	k = 0
 	############################################
