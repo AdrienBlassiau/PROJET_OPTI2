@@ -3,6 +3,6 @@ include("./helpers/generate.jl")
 
 using.Generator
 
-for i in 2:5
-	generate(i,i,2,0.5,0.5,(2,3),(2,3),"generated_test/test_wh$i.input")
+for i in 1:20
+	generate(100,100,10,0.1,0.1,(1,10),(1,100),"generated_test/test_wh$i.input")
 end

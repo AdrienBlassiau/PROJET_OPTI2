@@ -35,7 +35,7 @@ function run(inst, sol)
   w = inst.w
 
   m = Model(with_optimizer(CPLEX.Optimizer))
-  MOI.set(m, MOI.RawParameter("CPX_PARAM_BARDISPLAY"),0)
+  MOI.set(m, MOI.RawParameter("CPXPARAM_MIP_Display"),0)
 
   @variable(m, P[1:n])
   @variable(m, y[1:n, 1:h, 1:w], Bin)
