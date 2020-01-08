@@ -133,6 +133,11 @@ Le paramètre cpu time est le temps de calcul de `run`. Les valeurs de `inst` et
 function post_process(cpu_time::Float64, inst, sol, others)
 	profit_max, sol_max = others
 	println("OBJECTIF : $profit_max")
+	for i in 1:inst.n
+	    if is_placed(sol_max, i)
+	    	println("ANNONCEUR $i PLACÉ EN : ($(sol_max.la[i]),$(sol_max.ca[i]))")
+	    end
+	end
 	println("Temps de calcul : $cpu_time.")
 end
 

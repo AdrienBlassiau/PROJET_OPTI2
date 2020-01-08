@@ -118,6 +118,14 @@ function post_process(cpu_time::Float64, inst, sol, others)
   # println()
 
   # println("TERMINAISON : ", termination_status(m))
+  nb_placed = 0
+  for i in 1:inst.n
+    if is_placed(sol, i)
+      nb_placed = nb_placed+1
+    end
+  end
+
+  println("NB PLACED: $(sum(value.(c)))")
   println("OBJECTIF : $(objective_value(m))")
   # println("VALEURS de P : $(value.(P))")
   # println("VALEURS de y : $(value.(y))")

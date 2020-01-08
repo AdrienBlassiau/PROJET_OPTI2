@@ -64,6 +64,7 @@ if length(ARGS) == 2
   include("../" * algorithm)
   for input_file in readdir(test_folder)
     if(endswith(input_file, ".input"))
+      println(input_file)
       main(test_folder * input_file)
     end
   end
