@@ -61,7 +61,7 @@ Cette fonction réalise un recuit simulé
 function simulated_annealing(inst, sol)
 	gr()
 	################ PARAMÈTRES ################
-	phi = 0.995
+	phi = 0.9995
 	D_step = 2
 	T_init = 40
 	epsilon = 0.0001
@@ -105,7 +105,7 @@ function simulated_annealing(inst, sol)
 				energy_p = energie_proba_distrib(delta_gain,T)
 				println("ENERGIE : $energy_p et K : $rand_double")
 
-				if(rand_double > energy_p)
+				if(rand_double <= energy_p)
 					println("ON REVERT\n")
 					revert_neighbour(inst, current_sol, neighbour);
 				end
