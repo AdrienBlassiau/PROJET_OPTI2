@@ -61,7 +61,7 @@ Cette fonction réalise un recuit simulé
 function simulated_annealing(inst, sol)
 	gr()
 	################ PARAMÈTRES ################
-	phi = 0.99995
+	phi = 0.995
 	D_step = 2
 	T_init = 40
 	epsilon = 0.0001
@@ -98,7 +98,7 @@ function simulated_annealing(inst, sol)
 					meilleur_gain = current_gain
 					meilleur_sol = deepcopy(current_sol)
 					println("NOUVEAU MINIMUM : $meilleur_gain")
-					# plot_solution(inst, current_sol)
+					plot_solution(inst, current_sol)
 				end
 			else
 				rand_double = rand()
