@@ -3,9 +3,11 @@ include("./helpers/generate.jl")
 
 using.Generator
 
-for i in 5:100
-	i=i+100
-	generate(5,5,10,0.2,0.2,(1,1),(1,5),"generated_test/test5/size2/test_ecart$i.input")
+for j in 1:20
+	for i in 1:1000
+		i=i+1000
+		generate(j,j,5,0.2,0.2,(1,5),(1,20),"others/generated_tests/test1/size$j/test_time$i.input")
+	end
 end
 
 """
